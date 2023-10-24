@@ -1,0 +1,129 @@
+
+<!DOCTYPE html>
+<html lang="en" >
+<meta http-equiv="refresh" content="14" >
+<head>
+  <meta charset="UTF-8">
+  
+
+    <link rel="apple-touch-icon" type="image/png" href="https://cpwebassets.codepen.io/assets/favicon/apple-touch-icon-5ae1a0698dcc2402e9712f7d01ed509a57814f994c660df9f7a952f3060705ee.png" />
+
+    <meta name="apple-mobile-web-app-title" content="CodePen">
+
+    <link rel="shortcut icon" type="image/x-icon" href="https://cpwebassets.codepen.io/assets/favicon/favicon-aec34940fbc1a6e787974dcd360f2c6b63348d4b1f4e06c77743096d55480f33.ico" />
+
+    <link rel="mask-icon" type="image/x-icon" href="https://cpwebassets.codepen.io/assets/favicon/logo-pin-b4b4269c16397ad2f0f7a01bcdf513a1994f4c94b8af2f191c09eb0d601762b1.svg" color="#111" />
+
+
+  
+    <script src="https://cpwebassets.codepen.io/assets/common/stopExecutionOnTimeout-2c7831bb44f98c1391d6a4ffda0e1fd302503391ca806e7fcc7b9b87197aec26.js"></script>
+
+
+  <title>CodePen - Terminal Text Effect</title>
+
+    <link rel="canonical" href="https://codepen.io/Tbgse/pen/dYaJyJ">
+  
+  
+  
+  
+<style>
+@import url(https://fonts.googleapis.com/css?family=Khula:700);
+body {
+  background: #111;
+}
+.hidden {
+  opacity:0;
+}
+.console-container {
+ 
+  font-family:Khula;
+  font-size:7em;
+  text-align:center;
+  height:200px;
+  width:600px;
+  display:block;
+  position:center;
+  color:white;
+  top:0;
+  bottom:0;
+  left:0;
+  right:0;
+  margin:auto;
+}
+.console-underscore {
+   display:inline-block;
+  position:relative;
+  top:-0.14em;
+  left:10px;
+}
+</style>
+
+  
+  
+  
+</head>
+
+<body translate="no">
+  <div class='console-container'><span id='text'></span><div class='console-underscore' id='console'>&#95;</div></div>
+  
+      <script id="rendered-js" >
+// function([string1, string2],target id,[color1,color2])    
+consoleText(['Welcome.', 'To', 'Security Operations Center.'], 'text', ['tomato', 'rebeccapurple', 'lightblue']);
+
+function consoleText(words, id, colors) {
+  if (colors === undefined) colors = ['#fff'];
+  var visible = true;
+  var con = document.getElementById('console');
+  var letterCount = 1;
+  var x = 1;
+  var waiting = false;
+  var target = document.getElementById(id);
+  target.setAttribute('style', 'color:' + colors[0]);
+  window.setInterval(function () {
+
+    if (letterCount === 0 && waiting === false) {
+      waiting = true;
+      target.innerHTML = words[0].substring(0, letterCount);
+      window.setTimeout(function () {
+        var usedColor = colors.shift();
+        colors.push(usedColor);
+        var usedWord = words.shift();
+        words.push(usedWord);
+        x = 1;
+        target.setAttribute('style', 'color:' + colors[0]);
+        letterCount += x;
+        waiting = false;
+      }, 1000);
+    } else if (letterCount === words[0].length + 1 && waiting === false) {
+      waiting = true;
+      window.setTimeout(function () {
+        x = -1;
+        letterCount += x;
+        waiting = false;
+      }, 1000);
+    } else if (waiting === false) {
+      target.innerHTML = words[0].substring(0, letterCount);
+      letterCount += x;
+    }
+  }, 120);
+  window.setInterval(function () {
+    if (visible === true) {
+      con.className = 'console-underscore hidden';
+      visible = false;
+
+    } else {
+      con.className = 'console-underscore';
+
+      visible = true;
+    }
+  }, 400);
+}
+//# sourceURL=pen.js
+    </script>
+
+
+  
+  <script src="https://cpwebassets.codepen.io/assets/editor/iframe/iframeRefreshCSS-44fe83e49b63affec96918c9af88c0d80b209a862cf87ac46bc933074b8c557d.js"></script>
+</body>
+
+</html>
